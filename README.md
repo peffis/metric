@@ -5,6 +5,7 @@ Int64Counter and Int64Gauge) and probably has many issues.
 
 You can control it with two environment variables:
 | Environment variable | Description | Example |
+| -------------------- | ----------- | ------- |
 | OTEL_EXPORTER_OTLP_METRICS_ENDPOINT | The endpoint to send the OTLP
 metrics data to | OTEL_EXPORTER_OTLP_METRICS_ENDPOINT=127.0.0.1:4317 |
 | OTEL_METRIC_EXPORT_INTERVAL | How often the metric data should be
