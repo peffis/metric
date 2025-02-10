@@ -1,18 +1,16 @@
-# minimetrics small memory footprint OTLP/GRPC metrics instrumentation library
+# metrics - a small memory footprint OTLP/GRPC metrics instrumentation library
 
 This is just a quick experiment. It is incomplete (only supports
 Int64Counter and Int64Gauge) and probably has many issues.
 
 You can control it with two environment variables:
-- OTEL_EXPORTER_OTLP_METRICS_ENDPOINT The endpoint to send the OTLP
-metrics data to
-  Example: OTEL_EXPORTER_OTLP_METRICS_ENDPOINT=127.0.0.1:4317
+| Environment variable | Description | Example |
+| OTEL_EXPORTER_OTLP_METRICS_ENDPOINT | The endpoint to send the OTLP
+metrics data to | OTEL_EXPORTER_OTLP_METRICS_ENDPOINT=127.0.0.1:4317 |
+| OTEL_METRIC_EXPORT_INTERVAL | How often the metric data should be
+sent to the endpoint | OTEL_METRIC_EXPORT_INTERVAL=15s |
 
-- OTEL_METRIC_EXPORT_INTERVAL How often the metric data should be sent
-to the endpoint
-  Example: OTEL_METRIC_EXPORT_INTERVAL=15s
-
-Example usage:
+## Example usage
 ```golang
 package main
 
