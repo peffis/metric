@@ -8,7 +8,7 @@ Int64Counter and Int64Gauge and the only export is OTLP/GRPC) and probably has m
 You can control it with two environment variables:
 | Environment variable | Description | Example value | Default value |
 | -------------------- | ----------- | ------- | --------------------|
-| OTEL_EXPORTER_OTLP_METRICS_ENDPOINT | The endpoint to send the OTLP metrics data to | 127.0.0.1:4317 | 127.0.0.1:4317 |
+| OTEL_EXPORTER_OTLP_METRICS_ENDPOINT | The endpoint to send the OTLP metrics data to | otel-collector:4317 | localhost:4317 |
 | OTEL_METRIC_EXPORT_INTERVAL | How often the metric data should be sent to the endpoint | 15s | 60s |
 
 ## Example usage
