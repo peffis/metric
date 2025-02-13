@@ -1,13 +1,15 @@
 # metrics - a small memory footprint OTLP/GRPC metrics instrumentation library
 
-This is just a quick experiment. It is incomplete (only supports
-Int64Counter and Int64Gauge) and probably has many issues.
+This is a quick experiment to explore the possibility for an alternative to the official [golang library](https://github.com/open-telemetry/opentelemetry-go). The reason for exploring the alternative was that it was found that the official library used much more memory than the equivalent Prometheus instrumentation. So the purpose was to explore if some, more minimal memory footprint solution could be found that solved my needs. The official library is a great piece of software, capable of many things and built in a nice, generic way, but perhaps the focus so far has not been on conserving memory and some features, even if you don't use them, use memory and, since the memory is counted per metrics instrumentation (such as counters and gauges) this can amount to quite some numbers for services that uses many metric instrumentations. 
+
+This library, an experiment as it is, is incomplete though (it only supports
+Int64Counter and Int64Gauge at the moment) and probably has many issues. I have used it for my experiments, where it was shown that it uses about 5 times less memory than the official library for an equivalent service, but it is not recommended for production environments. 
 
 You can control it with two environment variables:
-| Environment variable | Description | Example |
-| -------------------- | ----------- | ------- |
-| OTEL_EXPORTER_OTLP_METRICS_ENDPOINT | The endpoint to send the OTLP metrics data to | OTEL_EXPORTER_OTLP_METRICS_ENDPOINT=127.0.0.1:4317 |
-| OTEL_METRIC_EXPORT_INTERVAL | How often the metric data should be sent to the endpoint | OTEL_METRIC_EXPORT_INTERVAL=15s |
+| Environment variable | Description | Example value | Default value |
+| -------------------- | ----------- | ------- | --------------------|
+| OTEL_EXPORTER_OTLP_METRICS_ENDPOINT | The endpoint to send the OTLP metrics data to | 127.0.0.1:4317 | 127.0.0.1:4317 |
+| OTEL_METRIC_EXPORT_INTERVAL | How often the metric data should be sent to the endpoint | 15s | 60s |
 
 ## Example usage
 ```golang
