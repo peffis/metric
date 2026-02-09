@@ -106,7 +106,7 @@ func (m *meter) run() {
 		exportEndpoint = e
 	}
 
-	conn, err := grpc.Dial(exportEndpoint,
+	conn, err := grpc.NewClient(exportEndpoint,
 		grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		panic(err.Error())
