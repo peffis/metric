@@ -143,6 +143,9 @@ func (m *meter) run() {
 					metricsToExport = nil
 				}
 			}
+			if len(metricsToExport) > 0 { // flush any left-over metrics
+				exportMetrics(client, metricsToExport)
+			}
 		}
 	}
 }
