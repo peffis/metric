@@ -181,46 +181,32 @@ func exportMetrics(client otlpcollector.MetricsServiceClient, metrics []*metrics
 }
 
 func makeMetricPayload(m Metric) *metricspb.Metric {
-	// Create a metric data payload
-	var metric *metricspb.Metric
+	dp := &metricspb.NumberDataPoint{
+		TimeUnixNano: uint64(m.GetUpdateTime().UnixNano()),
+		Value: &metricspb.NumberDataPoint_AsInt{
+			AsInt: m.GetValue(),
+		},
+		Attributes: makeAttributes(m),
+	}
+
+	metric := &metricspb.Metric{
+		Name:        *m.GetName(),
+		Description: *m.GetDescription(),
+		Unit:        *m.GetUnit(),
+	}
+
 	switch m.GetType() {
 	case INT64_COUNTER:
-		metric = &metricspb.Metric{
-			Name:        *m.GetName(),
-			Description: *m.GetDescription(),
-			Unit:        *m.GetUnit(),
-			Data: &metricspb.Metric_Sum{
-				Sum: &metricspb.Sum{
-					DataPoints: []*metricspb.NumberDataPoint{
-						{
-							TimeUnixNano: uint64(m.GetUpdateTime().UnixNano()),
-							Value: &metricspb.NumberDataPoint_AsInt{
-								AsInt: m.GetValue(),
-							},
-							Attributes: makeAttributes(m),
-						},
-					},
-				},
+		metric.Data = &metricspb.Metric_Sum{
+			Sum: &metricspb.Sum{
+				DataPoints: []*metricspb.NumberDataPoint{dp},
 			},
 		}
 
 	case INT64_GAUGE:
-		metric = &metricspb.Metric{
-			Name:        *m.GetName(),
-			Description: *m.GetDescription(),
-			Unit:        *m.GetUnit(),
-			Data: &metricspb.Metric_Gauge{
-				Gauge: &metricspb.Gauge{
-					DataPoints: []*metricspb.NumberDataPoint{
-						{
-							TimeUnixNano: uint64(m.GetUpdateTime().UnixNano()),
-							Value: &metricspb.NumberDataPoint_AsInt{
-								AsInt: m.GetValue(),
-							},
-							Attributes: makeAttributes(m),
-						},
-					},
-				},
+		metric.Data = &metricspb.Metric_Gauge{
+			Gauge: &metricspb.Gauge{
+				DataPoints: []*metricspb.NumberDataPoint{dp},
 			},
 		}
 	}
